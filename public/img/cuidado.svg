@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420">
+  <rect width="600" height="420" rx="32" fill="#f0fdfa"/>
+  <path d="M260 95h80v45h30v170H230V140h30z" fill="#ffffff" stroke="#0f766e" stroke-width="9"/>
+  <path d="M278 80h44v40h-44z" fill="#99f6e4" stroke="#0f766e" stroke-width="8"/>
+  <circle cx="300" cy="220" r="38" fill="#ccfbf1"/>
+  <path d="M300 195v50M275 220h50" stroke="#0f766e" stroke-width="9" stroke-linecap="round"/>
+  <text x="300" y="365" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#115e59">Cuidado personal</text>
+</svg>

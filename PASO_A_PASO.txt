@@ -1,0 +1,296 @@
+============================================================
+FARMACIA Y PERFUMERÍA - EQUIPO 1
+PASO A PASO PARA INSTALAR Y PROBAR EL PROYECTO
+============================================================
+
+1) DESCOMPRIMIR / COPIAR LA CARPETA
+-----------------------------------
+La carpeta final debe quedar exactamente en:
+
+C:\xampp\htdocs\2026\Antigravity
+
+IMPORTANTE:
+No dejes una carpeta doble, por ejemplo:
+C:\xampp\htdocs\2026\Antigravity\Farmacia_Perfumeria_Antigravity
+
+Los archivos index.php, env.php, composer.json, etc. tienen que estar
+DIRECTAMENTE dentro de Antigravity.
+
+
+2) INICIAR XAMPP
+----------------
+Abrí XAMPP Control Panel y prendé:
+
+- Apache
+- MySQL
+
+Los dos deberían quedar en verde.
+
+
+3) INSTALAR COMPOSER
+--------------------
+Si todavía no tenés Composer, instalalo en Windows.
+Durante la instalación, cuando te pregunte por PHP, elegí:
+
+C:\xampp\php\php.exe
+
+Después cerrá y volvé a abrir CMD/PowerShell.
+
+Comprobá que funcione escribiendo:
+
+composer --version
+
+
+4) INSTALAR VLCAS/PHPDOTENV
+---------------------------
+Abrí CMD o PowerShell dentro de:
+
+C:\xampp\htdocs\2026\Antigravity
+
+Y ejecutá:
+
+composer install
+
+El composer.json incluido ya pide:
+vlucas/phpdotenv
+
+Cuando termine debería aparecer una carpeta llamada:
+
+vendor
+
+
+5) CREAR EL ARCHIVO .env
+------------------------
+Dentro de la carpeta del proyecto ya existe:
+
+.env.example
+
+En CMD, parado dentro de Antigravity, ejecutá:
+
+copy .env.example .env
+
+Después abrí el archivo .env con Visual Studio Code o Bloc de notas.
+
+Dejalo así en la parte de MySQL:
+
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_NAME=farmacia_online
+DB_USER=root
+DB_PASS=
+
+En Mercado Pago vas a reemplazar estas dos líneas:
+
+MP_ACCESS_TOKEN=TEST-PEGAR_AQUI_TU_ACCESS_TOKEN
+MP_PUBLIC_KEY=TEST-PEGAR_AQUI_TU_PUBLIC_KEY
+
+por tus propias credenciales de PRUEBA.
+
+La URL local debe quedar:
+
+BASE_URL=http://localhost/2026/Antigravity
+
+IMPORTANTE:
+El archivo que realmente lee el programa es .env.
+.env.example queda solamente como plantilla.
+
+
+6) CREAR LA BASE DE DATOS
+-------------------------
+Con MySQL prendido, abrí:
+
+http://localhost/phpmyadmin/
+
+Después:
+
+1. Entrá a la pestaña "Importar".
+2. Elegí este archivo:
+   C:\xampp\htdocs\2026\Antigravity\db\schema.sql
+3. Tocá "Importar" / "Continuar".
+
+El archivo crea automáticamente:
+
+- base de datos: farmacia_online
+- tabla usuarios
+- tabla productos
+- tabla ordenes
+- tabla orden_items
+- usuario admin
+- productos de prueba de farmacia y perfumería
+
+
+7) ABRIR LA TIENDA
+------------------
+Entrá a:
+
+http://localhost/2026/Antigravity/index.php
+
+Deberías ver Farmacia Salud+ con las categorías:
+
+- Medicamentos
+- Perfumería
+- Higiene
+- Cuidado personal
+- Bebé
+
+
+8) PROBAR EL REQUISITO DE LA RECETA
+-----------------------------------
+Buscá, por ejemplo:
+
+Amoxicilina 500 mg x 21
+
+o
+
+Cefalexina 500 mg x 16
+
+Estos productos tienen la etiqueta:
+
+Rx · Receta
+
+Al tocar "Agregar":
+
+1. Se abre un modal.
+2. Te obliga a elegir una imagen de receta.
+3. Acepta JPG, PNG o WEBP.
+4. Máximo 5 MB.
+5. Si no cargás la receta, el medicamento no se agrega normalmente al flujo de compra.
+6. Una vez cargada, aparece en el carrito "Receta cargada".
+7. Recién ahí queda habilitado Mercado Pago.
+
+La receta se guarda de forma privada en:
+
+uploads\recetas\
+
+
+9) CONFIGURAR MERCADO PAGO
+--------------------------
+Entrá al panel de desarrolladores de Mercado Pago y obtené tus
+credenciales de PRUEBA para la aplicación del trabajo.
+
+Copiá el Access Token de prueba al archivo .env:
+
+MP_ACCESS_TOKEN=...
+
+Y la Public Key:
+
+MP_PUBLIC_KEY=...
+
+Para este proyecto el dato indispensable para crear el checkout desde PHP
+es el MP_ACCESS_TOKEN.
+
+Después guardá el .env y refrescá la página.
+
+
+10) PROBAR EL CHECKOUT
+----------------------
+Para una prueba completa:
+
+1. Agregá un producto normal.
+2. Verificá que Mercado Pago esté habilitado.
+3. Agregá un medicamento con receta.
+4. Cargá una imagen de receta.
+5. Tocá "Pagar con Mercado Pago".
+6. El backend vuelve a consultar la base de datos.
+7. El backend vuelve a verificar que exista una receta válida.
+8. Se crea la orden.
+9. Se genera la preferencia de Mercado Pago.
+10. El navegador te redirige a Mercado Pago.
+
+Esto es importante: la validación NO está solamente en JavaScript.
+También se hace en PHP, por lo que no se puede saltar simplemente
+habilitando el botón desde el navegador.
+
+
+11) PROBAR EL PANEL ADMINISTRADOR
+---------------------------------
+Entrá a:
+
+http://localhost/2026/Antigravity/admin/index.php
+
+Usuario:
+admin
+
+Contraseña:
+admin123
+
+Desde ahí podés:
+
+- ver productos
+- agregar productos
+- editar productos
+- indicar si requieren receta
+- cambiar stock
+- marcar destacados
+- ver órdenes
+- ver la receta asociada a una orden
+
+
+12) CÓMO CREAR UN PRODUCTO BAJO RECETA DESDE ADMIN
+---------------------------------------------------
+Entrá a Administración > Productos > Nuevo producto.
+
+Ejemplo:
+
+Nombre: Medicamento RX de prueba
+Categoría: Medicamentos
+Precio: 10000
+Stock: 10
+Destacado: No
+¿Requiere receta?: Sí
+Ruta de imagen: public/img/receta.svg
+Descripción: Producto de demostración bajo receta.
+
+Guardalo.
+
+Al volver a la tienda debería aparecer automáticamente y pedir receta.
+
+
+13) SI MERCADO PAGO NO FUNCIONA
+--------------------------------
+Revisá en este orden:
+
+A) ¿Apache está verde?
+B) ¿MySQL está verde?
+C) ¿Existe vendor\ después de composer install?
+D) ¿Existe el archivo .env?
+E) ¿MP_ACCESS_TOKEN tiene TU credencial de prueba?
+F) ¿BASE_URL es http://localhost/2026/Antigravity?
+G) ¿La extensión cURL está habilitada en PHP/XAMPP?
+
+Si el catálogo directamente no carga, revisá primero MySQL y la importación
+de db\schema.sql.
+
+
+14) ARCHIVOS PRINCIPALES QUE MODIFICAN EL KIOSCO ORIGINAL
+----------------------------------------------------------
+index.php
+- Cambia la estética y categorías a Farmacia y Perfumería.
+
+ db\schema.sql
+- Agrega requiere_receta en productos.
+- Agrega receta_archivo en ordenes.
+- Carga productos de farmacia/perfumería.
+
+api\upload_prescription.php
+- NUEVO.
+- Recibe y valida la imagen de receta.
+
+api\create_preference.php
+- Verifica en servidor si el carrito contiene productos bajo receta.
+- Bloquea Mercado Pago si falta la receta.
+
+public\js\app.js
+- Muestra el modal de receta.
+- Bloquea/desbloquea el checkout.
+
+admin\index.php + api\admin\save_product.php
+- Permiten configurar si un producto requiere receta.
+
+admin\view_prescription.php
+- Permite al administrador ver la receta de una orden.
+
+============================================================
+USUARIO ADMIN: admin
+CONTRASEÑA: admin123
+============================================================

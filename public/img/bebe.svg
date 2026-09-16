@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420">
+  <rect width="600" height="420" rx="32" fill="#fff7ed"/>
+  <circle cx="300" cy="190" r="100" fill="#ffedd5" stroke="#ea580c" stroke-width="8"/>
+  <circle cx="268" cy="180" r="9" fill="#9a3412"/>
+  <circle cx="332" cy="180" r="9" fill="#9a3412"/>
+  <path d="M265 225c22 20 48 20 70 0" fill="none" stroke="#9a3412" stroke-width="8" stroke-linecap="round"/>
+  <path d="M310 93c26-24 55-22 69 0" fill="none" stroke="#fb923c" stroke-width="10" stroke-linecap="round"/>
+  <text x="300" y="365" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#9a3412">Bebé</text>
+</svg>

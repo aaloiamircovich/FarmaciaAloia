@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420">
+  <rect width="600" height="420" rx="32" fill="#ecfdf5"/>
+  <circle cx="300" cy="210" r="120" fill="#d1fae5"/>
+  <g transform="translate(205 145)">
+    <rect x="0" y="35" width="190" height="85" rx="42" fill="#ffffff" stroke="#059669" stroke-width="10"/>
+    <path d="M95 35v85" stroke="#059669" stroke-width="10"/>
+    <path d="M12 54c25 18 48 40 70 65" stroke="#34d399" stroke-width="18" stroke-linecap="round" opacity=".7"/>
+  </g>
+  <text x="300" y="365" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#065f46">Medicamento</text>
+</svg>

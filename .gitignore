@@ -1,0 +1,8 @@
+/vendor/
+.env
+.env.*
+!.env.example
+/api/webhook.log
+/uploads/recetas/*
+!/uploads/recetas/.gitkeep
+!/uploads/recetas/.htaccess
