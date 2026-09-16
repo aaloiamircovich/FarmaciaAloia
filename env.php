@@ -36,9 +36,25 @@ if (!$rawBaseUrl) {
     if ($railwayDomain !== '') {
         $rawBaseUrl = 'https://' . $railwayDomain;
     } else {
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        // Railway termina HTTPS en su proxy y lo informa en esta cabecera.
+        $forwardedProtocol = strtolower(trim(explode(',', $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '')[0]));
+        $isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+            || $forwardedProtocol === 'https';
+        $protocol = $isHttps ? 'https' : 'http';
         $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-        $rawBaseUrl = $protocol . '://' . $host . '/2026/Antigravity';
+
+        // Detectar la carpeta real: en Railway es la raíz; en XAMPP puede ser una subcarpeta.
+        $documentRoot = !empty($_SERVER['DOCUMENT_ROOT'])
+            ? (realpath($_SERVER['DOCUMENT_ROOT']) ?: '')
+            : '';
+        $documentRoot = rtrim(str_replace('\\', '/', $documentRoot), '/');
+        $projectRoot = str_replace('\\', '/', __DIR__);
+        $basePath = '';
+        if ($documentRoot !== '' && str_starts_with($projectRoot, $documentRoot . '/')) {
+            $basePath = substr($projectRoot, strlen($documentRoot));
+        }
+
+        $rawBaseUrl = $protocol . '://' . $host . $basePath;
     }
 }
 
